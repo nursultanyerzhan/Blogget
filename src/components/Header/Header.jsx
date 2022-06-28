@@ -5,17 +5,15 @@ import Search from './Search';
 import Auth from './Auth';
 import Heading from './Heading';
 
-export const Header = () => {
-  return (
-    <header className={style.header}>
-      <Layout>
-        <div className={style.gridContainer}>
-          <Logo />
-          <Heading text='заголовок'/>
-          <Search />
-          <Auth auth='' />
-        </div>
-      </Layout>
-    </header>
-  )
-}
+export const Header = () => (
+  <header className={style.header}>
+    <Layout>
+      <div className={style.gridContainer}>
+        <Logo />
+        <Heading text='заголовок' />
+        <Search />
+        <Auth auth='' />
+      </div>
+    </Layout>
+  </header>
+);
