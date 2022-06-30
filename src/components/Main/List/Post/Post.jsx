@@ -2,12 +2,10 @@ import style from './Post.module.css';
 import notphoto from './img/notphoto.jpg';
 import PropTypes from 'prop-types';
 import formDate from '../../../../utils/formatDate';
-
+import Rating from './Rating';
 
 export const Post = ({postData}) => {
   const {title, author, ups, date} = postData;
-  console.log(title, author, ups, date);
-  console.log(style);
   return (
     <li className={style.post}>
       <img className={style.img} src={notphoto} alt="" />
@@ -21,11 +19,7 @@ export const Post = ({postData}) => {
         <a className={style.linkAuthor} href='#author'>{author}</a>
       </div>
 
-      <div className={style.rating}>
-        <button className={style.up} />
-        <p className={style.ups}>{ups}</p>
-        <button className={style.down} />
-      </div>
+      <Rating ups={ups}/>
 
       <time className={style.date} dateTime={date}>{formDate(date)}</time>
     </li>
