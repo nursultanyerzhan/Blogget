@@ -1,8 +1,14 @@
 import style from './Main.module.css';
 import Layout from '../Layout';
+import Tabs from './Tabs';
+import List from './List';
+import React from 'react';
 
 export const Main = () => (
-  <Layout>
-    <div className={style.main}></div>
-  </Layout>
+  <main className={style.main}>
+    <Layout>
+      <Tabs />
+      <List />
+    </Layout>
+  </main>
 );
