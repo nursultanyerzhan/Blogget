@@ -13,10 +13,13 @@ export const Post = ({postData}) => {
       <img className={style.img} src={notphoto} alt="" />
 
       <Content title={title} author={author}/>
+
       <Rating ups={ups}/>
+
       <button className={style.delete}>
         <img src={deleteImg}/>
       </button>
+
       <time className={style.date} dateTime={date}>{formDate(date)}</time>
     </li>
   );
