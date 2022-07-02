@@ -7,8 +7,9 @@ export const Rating = ({ups}) => {
   return (
     <Text As='div' className={style.rating}>
       <button className={style.up} />
-      <Text As='p' medium size={12} color='#8f8f8f'
-        className={style.ups}>{ups}</Text>
+      <p className={style.ups}>
+        {ups}
+      </p>
       <button className={style.down} />
     </Text>
   );

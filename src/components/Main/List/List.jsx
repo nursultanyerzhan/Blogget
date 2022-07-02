@@ -1,5 +1,6 @@
 import style from './List.module.css';
 import Post from './Post';
+import {assignId} from '../../../utils/generateRandomId';
 
 export const List = () => {
   const postsData = [
@@ -17,7 +18,8 @@ export const List = () => {
       ups: 22,
       date: '2022-02-22T00:45:00.000Z',
     },
-  ];
+  ].map(assignId);
+
   return (
     <ul className={style.list}>
       {postsData.map((postData) => (
