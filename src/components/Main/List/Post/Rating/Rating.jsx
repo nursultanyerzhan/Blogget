@@ -1,14 +1,16 @@
 import style from './Rating.module.css';
 import PropTypes from 'prop-types';
+import {Text} from '../../../../../UI/Text';
 
 export const Rating = ({ups}) => {
   console.log(style);
   return (
-    <div className={style.rating}>
+    <Text As='div' className={style.rating}>
       <button className={style.up} />
-      <p className={style.ups}>{ups}</p>
+      <Text As='p' medium size={12} color='#8f8f8f'
+        className={style.ups}>{ups}</Text>
       <button className={style.down} />
-    </div>
+    </Text>
   );
 };
 

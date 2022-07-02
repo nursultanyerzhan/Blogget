@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import formDate from '../../../../utils/formatDate';
 import Rating from './Rating';
 import Content from './Content';
-import deleteImg from './img/delete.svg';
+import {ReactComponent as DeleteImg} from './img/delete.svg';
 
 export const Post = ({postData}) => {
   const {title, author, ups, date} = postData;
@@ -16,9 +16,7 @@ export const Post = ({postData}) => {
 
       <Rating ups={ups}/>
 
-      <button className={style.delete}>
-        <img src={deleteImg}/>
-      </button>
+      <DeleteImg className={style.delete}/>
 
       <time className={style.date} dateTime={date}>{formDate(date)}</time>
     </li>

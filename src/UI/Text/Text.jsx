@@ -13,12 +13,16 @@ export const Text = prop => {
     children,
     href,
     center,
+    bold,
+    medium,
   } = prop;
 
   const classes = classNames(
     className,
     style[color],
     {[style.center]: center},
+    {[style.bold]: bold},
+    {[style.medium]: medium},
     {[style[`fs${size}`]]: size},
     {[style[`fst${tsize}`]]: tsize},
     {[style[`fst${dsize}`]]: dsize},

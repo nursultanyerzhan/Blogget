@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
 import {assignId} from '../../../utils/generateRandomId';
 import {debounceRaf} from '../../../utils/debounce';
+import {Text} from '../../../UI/Text';
 
 import {ReactComponent as ArrowIcon} from './img/arrow.svg';
-import {ReactComponent as EyeIcon} from './img/eye.svg';
 import {ReactComponent as HomeIcon} from './img/home.svg';
-import {ReactComponent as PostIcon} from './img/post.svg';
-import {ReactComponent as SaveIcon} from './img/save.svg';
+import {ReactComponent as Top} from './img/top.svg';
+import {ReactComponent as Best} from './img/best.svg';
+import {ReactComponent as Hot} from './img/hot.svg';
 
 const LIST = [
   {value: 'Главная', Icon: HomeIcon},
-  {value: 'Просмотренные', Icon: EyeIcon},
-  {value: 'Сохраненные', Icon: SaveIcon},
-  {value: 'Мои посты', Icon: PostIcon},
+  {value: 'Топ', Icon: Top},
+  {value: 'Лучшие', Icon: Best},
+  {value: 'Горячие', Icon: Hot},
 ].map(assignId);
 
 export const Tabs = ({list, setList, addItem}) => {
@@ -53,12 +54,12 @@ export const Tabs = ({list, setList, addItem}) => {
         onClick={() => setIsDropdownOpen(false)}>
         {
           LIST.map(({value, id, Icon}) => (
-            <li className={style.item} key={id}>
+            <Text As='li' className={style.item} key={id}>
               <button className={style.btn} onClick={() => setMenu(value)}>
                 {value}
                 {Icon && <Icon width={30} height={30} />}
               </button>
-            </li>
+            </Text>
           ))
         }
       </ul>}
