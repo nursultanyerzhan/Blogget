@@ -16,11 +16,15 @@ export const useToken = (state) => {
   }, []);
 
   useEffect(() => {
-    console.log(token);
     if (token) {
       localStorage.setItem('bearer', token);
     }
   }, [token]);
 
-  return [token];
+  const delToken = () => {
+    setToken('');
+    localStorage.removeItem('bearer');
+  };
+
+  return [token, delToken];
 };
