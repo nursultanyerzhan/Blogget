@@ -1,22 +1,22 @@
 import style from './Post.module.css';
-import notphoto from './img/notphoto.jpg';
 import PropTypes from 'prop-types';
 import formDate from '../../../../utils/formatDate';
 import Rating from './Rating';
 import Content from './Content';
 import {ReactComponent as DeleteImg} from './img/delete.svg';
+import {Thumbnail} from './Thumbnail/Thumbnail';
 
 export const Post = ({postData}) => {
-  const {title, author, ups, date} = postData;
+  const {title, author, ups, date, thumbnail} = postData;
   return (
     <li className={style.post}>
-      <img className={style.img} src={notphoto} alt="" />
+      <Thumbnail thumbnail={thumbnail}/>
 
-      <Content title={title} author={author}/>
+      <Content title={title} author={author} />
 
-      <Rating ups={ups}/>
+      <Rating ups={ups} />
 
-      <DeleteImg className={style.delete}/>
+      <DeleteImg className={style.delete} />
 
       <time className={style.date} dateTime={date}>{formDate(date)}</time>
     </li>

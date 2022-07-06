@@ -1,24 +1,21 @@
 import style from './List.module.css';
 import Post from './Post';
-import {assignId} from '../../../utils/generateRandomId';
+// import {assignId} from '../../../utils/generateRandomId';
+import {useContext, useEffect, useState} from 'react';
+import {postsContext} from '../../../context/postsContext';
 
 export const List = () => {
-  const postsData = [
-    {
-      thumbnail: '',
-      title: 'Title',
-      author: 'NickName',
-      ups: 24,
-      date: '2022-02-24T00:45:00.000Z',
-    },
-    {
-      thumbnail: '',
-      title: 'Title2',
-      author: 'NickName3',
-      ups: 22,
-      date: '2022-02-22T00:45:00.000Z',
-    },
-  ].map(assignId);
+  const [postsData, setPostsData] = useState([]);
+  const {posts} = useContext(postsContext);
+
+  useEffect(() => {
+    if (!posts || posts.length === 0) return;
+
+    setPostsData(posts.map(item => {
+      item.data.date = item.data.created;
+      return item.data;
+    }));
+  }, [posts]);
 
   return (
     <ul className={style.list}>

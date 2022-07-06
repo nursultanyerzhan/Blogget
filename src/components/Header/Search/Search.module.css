@@ -20,8 +20,8 @@
   height: 20px;
   background-color: transparent;
   border: 0;
-  right: 12%;
-  top: 8%;
+  right: 7px;
+  top: 50%;
   transform: translateY(-50%);
   transition: color 0.36s ease-in-out;
 }

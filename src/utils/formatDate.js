@@ -1,4 +1,5 @@
 const formDate = date => {
+  const d = date * 1000;
   const options = {
     year: 'numeric',
     month: 'numeric',
@@ -7,7 +8,7 @@ const formDate = date => {
     minute: '2-digit',
   };
   return new Intl.DateTimeFormat('ru', options)
-    .format(new Date(date));
+    .format(new Date(d));
 };
 
 export default formDate;
