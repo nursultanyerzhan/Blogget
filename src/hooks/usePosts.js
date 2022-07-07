@@ -21,7 +21,6 @@ export const usePosts = () => {
     })
       .then(({data}) => {
         setPostsData(data.children);
-        // console.log(data);
       })
       .catch(err => {
         console.error(err);
