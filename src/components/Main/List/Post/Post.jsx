@@ -13,14 +13,13 @@ export const Post = ({postData}) => {
     ups,
     date,
     thumbnail,
-    selftext: markdown,
+    id,
   } = postData;
-  console.log(postData);
   return (
     <li className={style.post}>
       <Thumbnail thumbnail={thumbnail}/>
 
-      <Content title={title} author={author} markdown={markdown}/>
+      <Content title={title} author={author} id={id}/>
 
       <Rating ups={ups} />
 

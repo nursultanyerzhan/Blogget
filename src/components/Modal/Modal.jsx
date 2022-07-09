@@ -3,10 +3,25 @@ import {ReactComponent as CloseIcon} from './img/close.svg';
 import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import {useRef, useEffect} from 'react';
+import {useRef, useEffect, useState} from 'react';
+import {useCommentsData} from '../../hooks/useCommentsData';
+import {Text} from '../../UI/Text';
+import FormComment from './FormComment';
+import Comments from './Comments';
 
-export const Modal = ({title, author, markdown, closeModal}) => {
+export const Modal = ({id, closeModal}) => {
   const overlayRef = useRef(null);
+  const [commentsData] = useCommentsData(id);
+  const _post = {selftext: ''};
+  const [post, setPost] = useState(_post);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    if (commentsData.length < 1) return;
+
+    setPost(commentsData[0]);
+    setComments(commentsData[1]);
+  }, [commentsData]);
 
   const handleClick = e => {
     const target = e.target;
@@ -15,16 +30,26 @@ export const Modal = ({title, author, markdown, closeModal}) => {
     }
   };
 
+  const handleEscape = e => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('click', handleClick);
+    document.addEventListener('keydown', handleEscape);
     return () => {
       document.removeEventListener('click', handleClick);
+      document.removeEventListener('keydown', handleEscape);
     };
   }, []);
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        <h2 className={style.title}>{title}</h2>
+        <h2 className={style.title}>
+          {post && post.title}
+        </h2>
 
         <div className={style.content}>
           <Markdown options={{
@@ -36,13 +61,18 @@ export const Modal = ({title, author, markdown, closeModal}) => {
               },
             },
           }}>
-            {markdown}
+            {post && post.selftext}
           </Markdown>
         </div>
 
-        <p className={style.author}>{author}</p>
+        <Text As='p' className={style.author}>{post && post.author}</Text>
 
-        <button className={style.close}>
+        <FormComment />
+        {comments.length ? <Comments comments={comments}/> :
+          <p>Загрузка...</p>
+        }
+
+        <button className={style.close} onClick={closeModal}>
           <CloseIcon />
         </button>
       </div>
