@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 export const useAuth = () => {
   const [auth, setAuth] = useState({});
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
 
   useEffect(() => {
     console.log(token);

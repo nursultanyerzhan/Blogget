@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux';
 
 export const usePosts = () => {
   const [posts, setPostsData] = useState([]);
-  const token = useSelector(state => state.token);
+  const token = useSelector(state => state.tokenReducer.token);
 
   useEffect(() => {
     if (!token) return;
