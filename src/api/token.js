@@ -14,4 +14,5 @@ export const getToken = () => {
     setToken(localStorage.getItem('bearer'));
     return localStorage.getItem('bearer');
   }
+  return '';
 };
