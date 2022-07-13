@@ -5,7 +5,7 @@ import formDate from '../../../utils/formatDate';
 
 export const Comments = ({comments}) => (comments ? (
   <ul className={style.list}>
-    {comments.map((comment) => (
+    {comments.map((comment) => comment.body && (
       <li key={comment.id} className={style.item}>
         <Text As='h3' className={style.author} size={18} tsize={22}>
           {comment.author}

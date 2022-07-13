@@ -9,8 +9,11 @@ import {Text} from '../../UI/Text';
 import FormComment from './FormComment';
 import Comments from './Comments';
 import {useSelector} from 'react-redux';
+import {useParams, useNavigate} from 'react-router-dom';
 
-export const Modal = ({id, closeModal}) => {
+export const Modal = () => {
+  const {id, page} = useParams();
+  const navigate = useNavigate();
   useCommentsData(id);
   const overlayRef = useRef(null);
   const commentsData = useSelector(state =>
@@ -31,13 +34,13 @@ export const Modal = ({id, closeModal}) => {
   const handleClick = e => {
     const target = e.target;
     if (target === overlayRef.current) {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
   const handleEscape = e => {
     if (e.key === 'Escape') {
-      closeModal();
+      navigate(`/category/${page}`);
     }
   };
 
@@ -83,7 +86,10 @@ export const Modal = ({id, closeModal}) => {
           </>
         )}
 
-        <button className={style.close} onClick={closeModal}>
+        <button className={style.close} onClick={() => {
+          navigate(`/category/${page}`);
+        }
+        }>
           <CloseIcon />
         </button>
       </div>
@@ -96,5 +102,4 @@ Modal.propTypes = {
   title: PropTypes.string,
   author: PropTypes.string,
   markdown: PropTypes.string,
-  closeModal: PropTypes.func,
 };
