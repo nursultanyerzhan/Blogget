@@ -1,43 +1,38 @@
 import {
-  AUTH_REQUEST,
-  AUTH_REQUEST_SUCCESS,
-  AUTH_REQUEST_ERROR,
-  AUTH_LOGOUT,
-} from './action';
+  POST_REQUEST,
+  POST_REQUEST_SUCCESS,
+  POST_REQUEST_ERROR,
+} from './postAction';
 
 const initialState = {
   loading: false,
-  data: {},
+  data: [],
   error: '',
 };
 
-export const authReducer = (state = initialState, action) => {
+export const postReducer = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_REQUEST:
+    case POST_REQUEST:
       return {
         ...state,
         loading: true,
         error: '',
       };
-    case AUTH_REQUEST_SUCCESS:
+    case POST_REQUEST_SUCCESS:
       return {
         ...state,
-        loading: false,
         data: action.data,
+        loading: false,
         error: '',
       };
-    case AUTH_REQUEST_ERROR:
+    case POST_REQUEST_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error,
       };
-    case AUTH_LOGOUT:
-      return {
-        ...state,
-        data: {},
-      };
 
     default: return state;
   }
 };
+
