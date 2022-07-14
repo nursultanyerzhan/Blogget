@@ -21,14 +21,14 @@ export const Modal = () => {
   );
   const status = useSelector(state => state.commentsDataReducer.status);
   const _post = {selftext: ''};
-  const [post, setPost] = useState(_post);
-  const [comments, setComments] = useState([]);
+  const [post] = useState(_post);
+  const [comments] = useState([]);
 
   useEffect(() => {
     if (commentsData.length < 1) return;
 
-    setPost(commentsData.post);
-    setComments(commentsData.comments);
+    // setPost(commentsData.post);
+    // setComments(commentsData.comments);
   }, [commentsData]);
 
   const handleClick = e => {
