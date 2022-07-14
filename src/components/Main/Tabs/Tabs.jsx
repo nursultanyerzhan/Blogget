@@ -13,7 +13,7 @@ import {ReactComponent as Hot} from './img/hot.svg';
 import {useNavigate} from 'react-router-dom';
 
 const LIST = [
-  {value: 'Главная', Icon: HomeIcon, link: 'rising'},
+  {value: 'Главная', Icon: HomeIcon, link: '/'},
   {value: 'Топ', Icon: Top, link: 'top'},
   {value: 'Лучшие', Icon: Best, link: 'best'},
   {value: 'Горячие', Icon: Hot, link: 'hot'},
@@ -59,7 +59,11 @@ export const Tabs = ({list, setList, addItem}) => {
             <Text As='li' className={style.item} key={id}>
               <button className={style.btn} onClick={() => {
                 setMenu(value);
-                navigate(`/category/${link}`);
+                if (link === '/') {
+                  navigate(`/`);
+                } else {
+                  navigate(`/category/${link}`);
+                }
               }}>
                 {value}
                 {Icon && <Icon width={30} height={30} />}
