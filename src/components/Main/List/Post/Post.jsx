@@ -11,7 +11,7 @@ export const Post = ({postData}) => {
     title,
     author,
     ups,
-    date,
+    created: date,
     thumbnail,
     id,
   } = postData;

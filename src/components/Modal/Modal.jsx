@@ -3,33 +3,18 @@ import {ReactComponent as CloseIcon} from './img/close.svg';
 import PropTypes from 'prop-types';
 import Markdown from 'markdown-to-jsx';
 import ReactDOM from 'react-dom';
-import {useRef, useEffect, useState} from 'react';
+import {useRef, useEffect} from 'react';
 import {useCommentsData} from '../../hooks/useCommentsData';
 import {Text} from '../../UI/Text';
 import FormComment from './FormComment';
 import Comments from './Comments';
-import {useSelector} from 'react-redux';
 import {useParams, useNavigate} from 'react-router-dom';
 
 export const Modal = () => {
   const {id, page} = useParams();
   const navigate = useNavigate();
-  useCommentsData(id);
+  const commentsData = useCommentsData(id);
   const overlayRef = useRef(null);
-  const commentsData = useSelector(state =>
-    state.commentsDataReducer.data
-  );
-  const status = useSelector(state => state.commentsDataReducer.status);
-  const _post = {selftext: ''};
-  const [post] = useState(_post);
-  const [comments] = useState([]);
-
-  useEffect(() => {
-    if (commentsData.length < 1) return;
-
-    // setPost(commentsData.post);
-    // setComments(commentsData.comments);
-  }, [commentsData]);
 
   const handleClick = e => {
     const target = e.target;
@@ -55,12 +40,12 @@ export const Modal = () => {
   return ReactDOM.createPortal(
     <div className={style.overlay} ref={overlayRef}>
       <div className={style.modal}>
-        {status === 'loading' && 'Загрузки...'}
-        {status === 'error' && 'ошибка'}
-        {status === 'loaded' && (
+        {commentsData.status === 'loading' && 'Загрузки...'}
+        {commentsData.status === 'error' && 'ошибка'}
+        {commentsData.status === 'loaded' && (
           <>
             <h2 className={style.title}>
-              {post && post.title}
+              {commentsData.post && commentsData.post.title}
             </h2>
 
             <div className={style.content}>
@@ -73,14 +58,18 @@ export const Modal = () => {
                   },
                 },
               }}>
-                {post && post.selftext}
+                {commentsData.post && commentsData.post.selftext}
               </Markdown>
             </div>
 
-            <Text As='p' className={style.author}>{post && post.author}</Text>
+            <Text As='p' className={style.author}>{
+              commentsData.post && commentsData.post.author
+            }</Text>
 
             <FormComment />
-            {comments.length ? <Comments comments={comments} /> :
+            {commentsData.comments.length ? <Comments comments={
+              commentsData.comments
+            } /> :
               <p>Загрузка...</p>
             }
           </>

@@ -12,4 +12,8 @@ export const useCommentsData = (id) => {
     if (!token) return;
     dispatch(commentsDataRequestAsync(id));
   }, []);
+
+  const comments = useSelector(state => state.comments);
+
+  return comments;
 };
