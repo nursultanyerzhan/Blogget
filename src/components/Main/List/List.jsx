@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import PostPreloader from '../../../UI/PostPreloader';
 import {postRequestAsync} from '../../../store/post/postAction';
 import {useParams, Outlet} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export const List = () => {
   const [postsData, setPostsData] = useState([]);
@@ -13,9 +14,22 @@ export const List = () => {
   const endList = useRef(null);
   const dispatch = useDispatch();
   const {page} = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(postRequestAsync(page));
+    const listPages = ['top', 'best', 'hot'];
+    let isRightPage = false;
+    listPages.forEach(item => {
+      if (item === page) {
+        isRightPage = true;
+      }
+    });
+
+    if (isRightPage) {
+      dispatch(postRequestAsync(page));
+    } else {
+      navigate('*');
+    }
   }, [page]);
 
   useEffect(() => {
