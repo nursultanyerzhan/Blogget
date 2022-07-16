@@ -23,7 +23,7 @@ export const List = () => {
         dispatch(postRequestAsync());
       }
     }, {
-      rootMargin: '0px',
+      rootMargin: '100px',
     });
 
     observer.observe(endList.current);
@@ -40,7 +40,7 @@ export const List = () => {
       <ul className={style.list}>
         {loading ? <PostPreloader /> :
           posts.map((postData) => (
-            <Post key={postData.data.id} postData={postData.data} />
+            <Post key={postData.id} postData={postData} />
           ))
         }
         <li ref={endList} className={style.end} />

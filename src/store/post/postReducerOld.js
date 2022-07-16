@@ -4,7 +4,7 @@ import {
   POST_REQUEST_SUCCESS_AFTER,
   POST_REQUEST_ERROR,
   CHANGE_PAGE,
-} from './postAction';
+} from './postActionOld';
 
 const initialState = {
   loading: false,

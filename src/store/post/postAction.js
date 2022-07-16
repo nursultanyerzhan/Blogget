@@ -1,65 +1,37 @@
 import axios from 'axios';
 import {URL_API} from '../../api/const';
+import {createAsyncThunk} from '@reduxjs/toolkit';
 
-export const POST_REQUEST = 'POST_REQUEST';
-export const POST_REQUEST_SUCCESS = 'POST_REQUEST_SUCCESS';
-export const POST_REQUEST_SUCCESS_AFTER = 'POST_REQUEST_SUCCESS_AFTER';
-export const POST_REQUEST_ERROR = 'POST_REQUEST_ERROR';
-export const CHANGE_PAGE = 'CHANGE_PAGE';
+export const postRequestAsync = createAsyncThunk(
+  'posts/fetch',
+  (newPage, {getState}) => {
+    let page = getState().postReducer.page;
+    if (newPage) {
+      page = newPage;
+    }
 
-export const postRequest = () => ({
-  type: POST_REQUEST,
-});
+    const token = getState().token.token;
+    let after = getState().postReducer.after;
+    // const loading = getState().postReducer.loading;
+    // const isLast = getState().postReducer.isLast;
 
-export const postRequestSuccess = (data) => ({
-  type: POST_REQUEST_SUCCESS,
-  data: data.children,
-  after: data.after,
-});
+    if (!token) return; // || loading || isLast
 
-export const postRequestSuccessAfter = (data) => ({
-  type: POST_REQUEST_SUCCESS_AFTER,
-  data: data.children,
-  after: data.after,
-});
-
-export const postRequestError = (error) => ({
-  type: POST_REQUEST_ERROR,
-  error,
-});
-
-export const changePage = (page) => ({
-  type: CHANGE_PAGE,
-  page,
-});
-
-export const postRequestAsync = (newPage) => (dispatch, getState) => {
-  let page = getState().postReducer.page;
-  if (newPage) {
-    page = newPage;
-    dispatch(changePage(page));
-  }
-
-  const token = getState().token.token;
-  const after = getState().postReducer.after;
-  const loading = getState().postReducer.loading;
-  const isLast = getState().postReducer.isLast;
-
-  if (!token || loading || isLast) return;
-  dispatch(postRequest());
-  axios(`${URL_API}/${page}?limit=10&${after ? `after=${after}` : ''}`, {
-    headers: {
-      Authorization: `bearer ${token}`,
-    },
-  })
-    .then(({data}) => {
-      if (after) {
-        dispatch(postRequestSuccessAfter(data.data));
-      } else {
-        dispatch(postRequestSuccess(data.data));
-      }
+    console.log(page);
+    // eslint-disable-next-line max-len
+    return axios(`${URL_API}/${page}?limit=7&${after ? `after=${after}` : ''}`, {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
     })
-    .catch(err => {
-      dispatch(postRequestError(err.toString()));
-    });
-};
+      .then(({data}) => {
+        let posts = data.data.children.map(item => item.data);
+        after = data.data.after;
+        const beforePosts = getState().postReducer.data;
+        posts = [...beforePosts, ...posts];
+        console.log(posts);
+
+        return {posts, page, after};
+      })
+      .catch((error) => ({error: error.toString()}));
+  });
