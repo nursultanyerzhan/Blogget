@@ -6,7 +6,6 @@ const initialState = {
   data: [],
   error: '',
   after: '',
-  isLast: false,
   page: '',
 };
 
@@ -20,15 +19,11 @@ export const postSlice = createSlice({
       state.loading = true;
     },
     [postRequestAsync.fulfilled.type]: (state, action) => {
-      console.log(action.payload);
-      console.log([...state.data, action.payload.posts]);
       state.data = action.payload.posts;
-      // [...state.data, action.payload.posts];
       state.page = action.payload.page;
       state.error = '';
       state.loading = false;
       state.after = action.payload.after;
-      // state.isLast = !action.payload.after;
     },
     [postRequestAsync.rejected.type]: (state, action) => {
       state.error = action.error;

@@ -6,18 +6,19 @@ export const postRequestAsync = createAsyncThunk(
   'posts/fetch',
   (newPage, {getState}) => {
     let page = getState().postReducer.page;
+    let isNewPage = false;
     if (newPage) {
+      if (newPage !== page) {
+        isNewPage = true;
+      }
       page = newPage;
     }
 
     const token = getState().token.token;
     let after = getState().postReducer.after;
-    // const loading = getState().postReducer.loading;
-    // const isLast = getState().postReducer.isLast;
 
-    if (!token) return; // || loading || isLast
+    if (!token) return;
 
-    console.log(page);
     // eslint-disable-next-line max-len
     return axios(`${URL_API}/${page}?limit=7&${after ? `after=${after}` : ''}`, {
       headers: {
@@ -25,13 +26,19 @@ export const postRequestAsync = createAsyncThunk(
       },
     })
       .then(({data}) => {
-        let posts = data.data.children.map(item => item.data);
         after = data.data.after;
-        const beforePosts = getState().postReducer.data;
-        posts = [...beforePosts, ...posts];
-        console.log(posts);
+        let posts = data.data.children.map(item => item.data);
 
-        return {posts, page, after};
+        if (isNewPage) {
+          return {posts, page, after};
+        } else {
+          const beforePosts = getState().postReducer.data;
+          posts = [...beforePosts, ...posts];
+          posts = [...new Map(posts.map(item =>
+            [item['id'], item])).values()];
+
+          return {posts, page, after};
+        }
       })
       .catch((error) => ({error: error.toString()}));
   });
