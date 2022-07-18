@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import {ReactComponent as LoginIcon} from './img/login.svg';
 import {urlAuth} from '../../../api/auth';
 import {Text} from '../../../UI/Text';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {deleteToken} from '../../../store/tokenReducer';
 import {useDispatch} from 'react-redux';
 import {useAuth} from '../../../hooks/useAuth';
 import AuthLoader from '../../../UI/AuthLoader';
+import {useNavigate} from 'react-router-dom';
 
 export const Auth = () => {
   const dispatch = useDispatch();
   const [showClose, setShowClose] = useState(false);
   const [auth, loading, clearAuth] = useAuth();
+  const navigate = useNavigate();
 
   const handleShowClose = () => {
     setShowClose(!showClose);
@@ -22,6 +24,12 @@ export const Auth = () => {
     dispatch(deleteToken());
     clearAuth();
   };
+
+  useEffect(() => {
+    if (auth.name) {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <div className={style.container}>
